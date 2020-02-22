@@ -6,7 +6,7 @@ from time import sleep
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
-        self.browser=webdriver.Firefox()
+        self.browser=webdriver.Chrome()
         self.browser.implicitly_wait(3)
         
     def tearDown(self):
@@ -45,6 +45,7 @@ class NewVisitorTest(LiveServerTestCase):
         sleep(0.5)
         edith_list_url=self.browser.current_url
         self.assertRegex(edith_list_url,'/lists/.+')
+
         self.check_for_row_in_list_table('1:Buy Peacock feathers')
         # self.assertIn('1:Buy Peacock feathers',[row.text for row in rows])
         
@@ -54,7 +55,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox=self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feaher to make a bomb')
         inputbox.send_keys(Keys.ENTER)   
-        sleep(20)
+        
 
         #页面再次更新，他的清单中有了两个项目
         self.check_for_row_in_list_table('1:Buy Peacock feathers')        
