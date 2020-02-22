@@ -54,7 +54,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox=self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feaher to make a bomb')
         inputbox.send_keys(Keys.ENTER)   
-        
+        sleep(20)
 
         #页面再次更新，他的清单中有了两个项目
         self.check_for_row_in_list_table('1:Buy Peacock feathers')        
@@ -78,7 +78,7 @@ class NewVisitorTest(LiveServerTestCase):
         #鸣人输入待办事项，新建一个清单
         #他不像迪达拉那样热情
         inputbox=self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys('Use peacock feaher to make a bomb')
+        inputbox.send_keys('Kagebunnshinn')
         inputbox.send_keys(Keys.ENTER)
         sleep(0.5)
         
