@@ -39,8 +39,10 @@ class NewVisitorTest(LiveServerTestCase):
         #他的爱好是用羽毛做炸弹
         inputbox.send_keys('Buy Peacock feathers')
         
-        #他按回车后，页面更新了
+        #他按回车后，被带到了新URL
         #待办事项表格中显示了“1： Buy Peacock feathers”
+        edith_list_url=self.browser.current_url
+        self.assertRegex(edith_list_url,'/lists/.+')
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table('1:Buy Peacock feathers')
         # self.assertIn('1:Buy Peacock feathers',[row.text for row in rows])
@@ -55,11 +57,46 @@ class NewVisitorTest(LiveServerTestCase):
         #页面再次更新，他的清单中有了两个项目
         self.check_for_row_in_list_table('1:Buy Peacock feathers')
         self.check_for_row_in_list_table('2:Use peacock feaher to make a bomb')
+        
+        #现在有个叫鸣人的人访问了网站
+        
+        ##我们使用新浏览器会话
+        ##确保鸣人的信息不会从cookie中泄露出来
+        self.browser.quit()
+        self.browser=webdriver.Firefox()
+        self.browser.implicitly_wait(3)
+        
+        #鸣人访问首页
+        #看不到迪达拉的名单
+        self.browser.get(self.live_server_url)
+        page_text=self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy Peacock feathers',page_text)
+        self.assertNotIn('make a bomb',page_text)
+        
+        #鸣人输入待办事项，新建一个清单
+        #他不像迪达拉那样热情
+        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feaher to make a bomb')
+        inputbox.send_keys(Keys.ENTER)
+        
+        #鸣人获得了他唯一的URL
+        naruto_list_url=self.browser.current_url
+        self.assertRegex(naruto_list_url,'/lists/.+')
+        self.assertNotEqual(naruto_list_url,edith_list_url)
+        
+        #还是看不到迪达拉的名单
+        page_text=self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy Peacock feathers',page_text)
+        self.assertNotIn('make a bomb',page_text)
+        
+        
         #迪达拉想知道这个网站是否会记住他的清单
         #他看到网站为他生成了唯一的URL
         #页面中的一些文字解说这个功能
         self.fail('Finish the test!')
         
         #他访问的那个URL，发现待办事项清单还在
+        
+        #两人都很满意的去睡觉了
 
         
