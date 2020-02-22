@@ -6,7 +6,7 @@ from time import sleep
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
-        self.browser=webdriver.Chrome()
+        self.browser=webdriver.Firefox()
         self.browser.implicitly_wait(3)
         
     def tearDown(self):
@@ -22,14 +22,22 @@ class NewVisitorTest(LiveServerTestCase):
         #迪达拉听说了一个很酷的在线待办事项应用
         #他去看了应用首页
         self.browser.get(self.live_server_url)
-
+        self.browser.set_window_size(1024,768)
+        
+        
         #他注意到网页头部和标题处都有“To-Do”这个词
         self.assertIn('To-Do',self.browser.title)
         header_text=self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do',header_text)
         
         #应用邀请他输入一个代办事项
+        #他看到输入框完美的居中显示
         inputbox=self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+                                inputbox.location['x']+inputbox.size['width']/2,
+                                512,
+                                delta=5
+        )
         self.assertEqual(
                             inputbox.get_attribute('placeholder'),
                             'Enter a to-do item'
