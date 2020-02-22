@@ -1,4 +1,4 @@
-# http://175.24.111.140:8080    Firefox
+# http://175.24.111.140:8080    FirefoxChrome
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -41,9 +41,10 @@ class NewVisitorTest(LiveServerTestCase):
         
         #他按回车后，被带到了新URL
         #待办事项表格中显示了“1： Buy Peacock feathers”
+        inputbox.send_keys(Keys.ENTER) 
+        sleep(0.5)
         edith_list_url=self.browser.current_url
         self.assertRegex(edith_list_url,'/lists/.+')
-        inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table('1:Buy Peacock feathers')
         # self.assertIn('1:Buy Peacock feathers',[row.text for row in rows])
         
@@ -52,10 +53,11 @@ class NewVisitorTest(LiveServerTestCase):
         #迪达拉很有条理和耐心
         inputbox=self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feaher to make a bomb')
-        inputbox.send_keys(Keys.ENTER)       
+        inputbox.send_keys(Keys.ENTER)   
+        
 
         #页面再次更新，他的清单中有了两个项目
-        self.check_for_row_in_list_table('1:Buy Peacock feathers')
+        self.check_for_row_in_list_table('1:Buy Peacock feathers')        
         self.check_for_row_in_list_table('2:Use peacock feaher to make a bomb')
         
         #现在有个叫鸣人的人访问了网站
@@ -78,6 +80,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox=self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feaher to make a bomb')
         inputbox.send_keys(Keys.ENTER)
+        sleep(0.5)
         
         #鸣人获得了他唯一的URL
         naruto_list_url=self.browser.current_url
