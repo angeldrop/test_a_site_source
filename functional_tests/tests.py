@@ -3,8 +3,26 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
+import sys
 
 class NewVisitorTest(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url='http://'+arg.split('=')[1]
+                return
+        super().setUpClass()
+        cls.server_url=cls.live_server_url
+        
+        
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url==cls.live_server_url:
+            super().tearDownClass()
+        
+    
+    
     def setUp(self):
         self.browser=webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -21,7 +39,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         #迪达拉听说了一个很酷的在线待办事项应用
         #他去看了应用首页
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1024,768)
         
         
@@ -33,7 +51,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         #应用邀请他输入一个代办事项
         #他看到输入框完美的居中显示
         inputbox=self.browser.find_element_by_id('id_new_item')
-        sleep(5)
+        sleep(2)
         # self.assertAlmostEqual(
                                 # inputbox.location['x']+inputbox.size['width']/2,
                                 # 1024/2,
@@ -80,7 +98,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         
         #鸣人访问首页
         #看不到迪达拉的名单
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         page_text=self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy Peacock feathers',page_text)
         self.assertNotIn('make a bomb',page_text)
