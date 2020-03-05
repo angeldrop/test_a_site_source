@@ -1,40 +1,11 @@
 # http://175.24.111.140:8080    FirefoxChrome
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
-import sys
 
-class NewVisitorTest(StaticLiveServerTestCase):
-    @classmethod
-    def setUpClass(cls):
-        for arg in sys.argv:
-            if 'liveserver' in arg:
-                cls.server_url='http://'+arg.split('=')[1]
-                return
-        super().setUpClass()
-        cls.server_url=cls.live_server_url
-        
-        
-    @classmethod
-    def tearDownClass(cls):
-        if cls.server_url==cls.live_server_url:
-            super().tearDownClass()
-        
-    
-    
-    def setUp(self):
-        self.browser=webdriver.Firefox()
-        self.browser.implicitly_wait(3)
-        
-    def tearDown(self):
-        self.browser.quit()
-        
-    def check_for_row_in_list_table(self,row_text):
-        sleep(1)
-        table=self.browser.find_element_by_id('id_list_table')
-        rows=table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text,[row.text for row in rows])
+
+class NewVisitorTest(FunctionalTest):
         
     def test_can_start_a_list_and_retrieve_it_later(self):
         #迪达拉听说了一个很酷的在线待办事项应用
@@ -70,8 +41,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
         #待办事项表格中显示了“1： Buy Peacock feathers”
         inputbox.send_keys(Keys.ENTER) 
         sleep(0.5)
-        edith_list_url=self.browser.current_url
-        self.assertRegex(edith_list_url,'/lists/.+')
+        didala_list_url=self.browser.current_url
+        self.assertRegex(didala_list_url,'/lists/.+')
 
         self.check_for_row_in_list_table('1:Buy Peacock feathers')
         # self.assertIn('1:Buy Peacock feathers',[row.text for row in rows])
@@ -110,10 +81,12 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
         sleep(0.5)
         
-        #鸣人获得了他唯一的URL
+        #鸣人想知道这个网站是否会记住他的清单
+        #他看到网站为他生成了唯一的URL
+        #页面中的一些文字解说这个功能
         naruto_list_url=self.browser.current_url
         self.assertRegex(naruto_list_url,'/lists/.+')
-        self.assertNotEqual(naruto_list_url,edith_list_url)
+        self.assertNotEqual(naruto_list_url,didala_list_url)
         
         #还是看不到迪达拉的名单
         page_text=self.browser.find_element_by_tag_name('body').text
@@ -121,13 +94,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertNotIn('make a bomb',page_text)
         
         
-        #迪达拉想知道这个网站是否会记住他的清单
-        #他看到网站为他生成了唯一的URL
-        #页面中的一些文字解说这个功能
-        self.fail('Finish the test!')
-        
-        #他访问的那个URL，发现待办事项清单还在
-        
+        #迪达拉访问的那个URL，发现待办事项清单还在
+        self.browser.get(didala_list_url)
         #两人都很满意的去睡觉了
 
-        
