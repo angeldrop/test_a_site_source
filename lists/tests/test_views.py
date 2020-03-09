@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 from django.utils.html import escape
+from unittest import skip
 
 from lists.views import home_page
 from lists.models import Item,List
@@ -108,6 +109,17 @@ class ListViewTest(TestCase):
         response=self.post_invalid_input()
         self.assertContains(response,escape(EMPTY_LIST_ERROR))
         
+    
+    @skip
+    def test_duplicate_item_validation_errors_end_up_on_lists_page(self):
+        list1=List.objects.create()
+        item1=Item.objects.create(list=list1,text='textey')
+        response=self.client.post(f'/lists/{list1.id}/',data={'text':'textey'})
+        expcted_error=escape("You've already got this in your list")
+        self.assertContains(response,expected_error)
+        self.assertTemplateUsed(response,'list.html')
+        self.assertEqual(Item.objects.all(),count(),1)
+        
         
     def test_display_item_form(self):
         list_=List.objects.create()
@@ -153,7 +165,7 @@ class NewListTest(TestCase):
         self.assertIsInstance(response.context['form'],ItemForm)
 
 
-    def test_invalid_list_item_arent_saved(self):
+    def test_invalid_list_item_are_not_saved(self):
         self.client.post('/lists/new',data={'text':''})
         self.assertEqual(List.objects.count(),0)
         self.assertEqual(Item.objects.count(),0)
