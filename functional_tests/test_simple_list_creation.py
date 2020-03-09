@@ -21,7 +21,7 @@ class NewVisitorTest(FunctionalTest):
         
         #应用邀请他输入一个代办事项
         #他看到输入框完美的居中显示
-        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox=self.get_item_input_box()
         sleep(2)
         # self.assertAlmostEqual(
                                 # inputbox.location['x']+inputbox.size['width']/2,
@@ -50,7 +50,7 @@ class NewVisitorTest(FunctionalTest):
         #页面中又显示了一个文本框，可以输入其他代办事项
         #他输入了“Use peacock feaher to make a bomb”
         #迪达拉很有条理和耐心
-        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox=self.get_item_input_box()
         inputbox.send_keys('Use peacock feaher to make a bomb')
         inputbox.send_keys(Keys.ENTER)   
         
@@ -76,7 +76,7 @@ class NewVisitorTest(FunctionalTest):
         
         #鸣人输入待办事项，新建一个清单
         #他不像迪达拉那样热情
-        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox=self.get_item_input_box()
         inputbox.send_keys('Kagebunnshinn')
         inputbox.send_keys(Keys.ENTER)
         sleep(0.5)
