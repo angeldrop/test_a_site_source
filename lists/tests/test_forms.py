@@ -10,7 +10,7 @@ from django.test import TestCase
 class ItemFormTest(TestCase):
     def test_form_renders_item_text_input(self):
         form=ItemForm()
-        self.assertIn('placeholder="Enter a to-do item"',form.as_p())
+        self.assertIn('placeholder="在此填入待办事项"',form.as_p())
         self.assertIn('class="form-control input -lg"',form.as_p())
     
     
@@ -19,7 +19,7 @@ class ItemFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['text'],
-            ["You can't have an empty list item"]
+            [EMPTY_LIST_ERROR]
         )
 
 
@@ -36,7 +36,7 @@ class ExistingListItemFormTest(TestCase):
     def test_form_render_item_text_input(self):
         list_=List.objects.create()
         form=ExistingListItemForm(for_list=list_)
-        self.assertIn('placeholder="Enter a to-do item"',form.as_p())
+        self.assertIn('placeholder="在此填入待办事项"',form.as_p())
     
     
     def test_form_validation_for_blank_items(self):
@@ -52,3 +52,10 @@ class ExistingListItemFormTest(TestCase):
         form=ExistingListItemForm(for_list=list_,data={'text':'no twins!'})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['text'],[DUPLICATE_ITEM_ERROR])
+
+
+    def test_form_save(self):
+        list_=List.objects.create()
+        form=ExistingListItemForm(for_list=list_,data={'text':'hi!'})
+        new_item=form.save(for_list=list_)
+        self.assertEqual(new_item,Item.objects.all()[0])

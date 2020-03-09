@@ -17,7 +17,7 @@ class NewVisitorTest(FunctionalTest):
         #他注意到网页头部和标题处都有“To-Do”这个词
         self.assertIn('To-Do',self.browser.title)
         header_text=self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('To-Do',header_text)
+        self.assertIn('待办事项清单',header_text)
         
         #应用邀请他输入一个代办事项
         #他看到输入框完美的居中显示
@@ -30,7 +30,7 @@ class NewVisitorTest(FunctionalTest):
         # )
         self.assertEqual(
                             inputbox.get_attribute('placeholder'),
-                            'Enter a to-do item'
+                            '在此填入待办事项'
         )
         
         #迪达拉在一个文本框中输入了“买了孔雀羽毛”Buy Peacock feathers

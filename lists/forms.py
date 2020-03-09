@@ -1,8 +1,8 @@
 from django import forms
 from lists.models import Item
 from django.core.exceptions import ValidationError
-EMPTY_LIST_ERROR="You can't have an empty list item"
-DUPLICATE_ITEM_ERROR="You've already got this in your list"
+EMPTY_LIST_ERROR="不能输入空白的待办事项"
+DUPLICATE_ITEM_ERROR="表格中已经有相同的待办事项了"
 
 
 class ItemForm(forms.models.ModelForm):
@@ -11,7 +11,7 @@ class ItemForm(forms.models.ModelForm):
         fields=('text',)
         widgets={
             'text':forms.fields.TextInput(attrs={
-                'placeholder':'Enter a to-do item',
+                'placeholder':'在此填入待办事项',
                 'class':'form-control input -lg',
             }),
         }
