@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
+    'da_zhuan_pan',
 ]
 
 MIDDLEWARE = [
