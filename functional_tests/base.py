@@ -1,6 +1,7 @@
 # http://175.24.111.140:8080    FirefoxChrome
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from time import sleep
 import sys,time
 
