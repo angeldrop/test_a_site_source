@@ -7,10 +7,20 @@ class Token(models.Model):
     email=models.EmailField()
     uid=models.CharField(max_length=255)
     
+
+class ListUserManager(BaseUserManager):
+    def create_user(self,email):
+        ListUser.objects.create(email=email)
+        
+        
+    def create_superuser(self,email,password):
+        self.create_user(email)
+
     
 class ListUser(AbstractBaseUser,PermissionsMixin):
     email=models.EmailField(primary_key=True)
-    USERNAME_FIELDS=['email','height']
+    USERNAME_FIELD='email'
+    # REQUIRED_FIELDS=['email','height']
     
     objects=ListUserManager()
     
@@ -23,10 +33,3 @@ class ListUser(AbstractBaseUser,PermissionsMixin):
         return True
 
 
-class ListUserManager(BaseUserManager):
-    def create_user(self,email):
-        ListUser.objects.create(email=email)
-        
-        
-    def create_superuser(self,email,password):
-        self.create_user(email)

@@ -1,21 +1,25 @@
-"""superlists URL Configuration
+import sys
+from accounts.models import ListUser,Token
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.urls import path,re_path
-from accounts import views
 
-urlpatterns = [
-    path('send_email', views.send_login_email, name='send_login_email'),
-]
+class PasswordlessAuthenticationBackend(object):
+    def authenticate(self,uid):
+        print('uid',uid,file=sys.stderr)
+        if not Token.objects.filter(uid=uid),exists():
+            print('no token found',file=sys.stderr)
+            return None
+        token=Token.objects.get(uid=uid)
+        print('got token',file=sys.stderr)
+        try:
+            user=ListUser.objects.get(email=token.email)
+            print('got user',file=sys.stderr)
+            return user
+        except ListUser.DoesNotExits:
+            print('new user',file=sys.stderr)
+            return ListUser.objects.create(email=token.email)
+            
+            
+    def get_user(self,email):
+        return ListUser.objects.get(email=email)
+        
+        

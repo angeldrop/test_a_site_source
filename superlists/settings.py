@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lists',
     'da_zhuan_pan',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
     }
 }
+
+
+AUTH_USER_MODEL='accounts.ListUser'
+AUTHENTICATION_BACKENDS=['accounts.authentication.PasswordlessAuthenticationBackend',]
 
 
 # Password validation
