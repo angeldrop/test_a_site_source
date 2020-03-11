@@ -83,7 +83,12 @@ DATABASES = {
     }
 }
 
-
+#发邮件相关
+EMAIL_HOST='smtp.163.com'
+EMAIL_HOST_USER='fffdan111@163.com'
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASSWORD')
+# EMAIL_PORT=587
+EMAIL_USE_SSL3=True
 AUTH_USER_MODEL='accounts.ListUser'
 AUTHENTICATION_BACKENDS=['accounts.authentication.PasswordlessAuthenticationBackend',]
 
