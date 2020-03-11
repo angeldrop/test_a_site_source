@@ -18,12 +18,22 @@
           <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
         <![endif]-->
-
+"
         
     </head>
     <body>
         <div class="container">
         
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">首页</a>
+                    <form class="navbar-form navbar-right" method="POST" action="#">
+                        <span>输入email用于登录：</span>
+                        <input class="form-control" name="email" type="text"/>
+                        {%csrf_token%}
+                    </form>
+                </div>
+            </nav>
             <div class="col-md-6 col-md-offset-3 jumbotron">
                 <div class="text-center">
                     <h1>{%block header_text%}{%endblock%}</h1>
