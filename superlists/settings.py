@@ -124,6 +124,9 @@ STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'../static'))
 
 
 AUTH_USER_MODEL='accounts.User'
+AUTHENTICATION_BACKENDS=[
+    'accounts.authentication.PasswordlessAuthenticationBackend',
+]
 
 
 LOGGING = {
