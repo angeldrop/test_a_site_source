@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>jQuery圆形大转盘抽奖插件 - 淡丁测试</title>
+
+<link rel="stylesheet" href="/static/css/index.css">
+
+</head>
+<body>
+
+<div class="box-lottery">
+	<div class="lottery-wrap" style="transform: rotate(-45deg);">
+		<span class="lottery-span1" data-id="8">
+			<i>长长卡<br>10元</i><img src="/static/img/lottery_01.png" alt="长长卡10">
+		</span>
+		<span class="lottery-span2" data-id="7">
+			<i>长长卡<br>20元</i><img src="/static/img/lottery_02.png" alt="长长卡20">
+		</span>
+		<span class="lottery-span3" data-id="6">
+			<i>长长卡<br>50元</i><img src="/static/img/lottery_03.png" alt="长长卡50">
+		</span>
+		<span class="lottery-span4" data-id="5">
+			<i>长长卡<br>100元</i><img src="/static/img/lottery_04.png" alt="长长卡100">
+		</span>
+		<span class="lottery-span5" data-id="1">
+			<i>谢谢参与</i><img src="/static/img/lottery_05.png" alt="谢谢参与">
+		</span>
+		<span class="lottery-span6" data-id="4">
+			<i>长长卡<br>200元</i><img src="/static/img/lottery_06.png" alt="长长卡200">
+		</span>
+		<span class="lottery-span7" data-id="3">
+			<i>长长卡<br>500元</i><img src="/static/img/lottery_07.png" alt="长长卡500">
+		</span>
+		<span class="lottery-span8" data-id="2">
+			<i>长安专制<br>手机</i><img src="/static/img/lottery_08.png" alt="iQOO Pro">
+		</span>
+	</div>
+	<a class="lottery-btn" href="javascript:void(0);"><i></i>立即抽奖</a>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/lib/anime.min.js"></script>
+<script src="/static/js/app/lottery.js"></script>
+<script>
+	var Lottery = Turntable.create();
+	$('.lottery-btn').on('click', function(){
+		var num = Math.floor(Math.random() * 8);
+		Lottery.start(num, function(index){
+			alert($('span').eq(index).find('i').text());
+			console.log('index', index, 'lottery-span', 'lottery-span'+(index+1));
+		});
+	});
+</script>
+
+</body>
+</html>

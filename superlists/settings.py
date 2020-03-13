@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lists',
     'accounts',
+    'da_zhuan_pan',
 ]
 
 MIDDLEWARE = [
