@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'lists',
     'accounts',
     'da_zhuan_pan',
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [

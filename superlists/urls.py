@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 from lists import views as lists_views,urls as lists_urls
 from accounts import urls as accounts_urls
+from polls import urls as polls_urls
 from da_zhuan_pan import urls as da_zhuan_pan_urls
 
 urlpatterns = [
@@ -24,5 +25,6 @@ urlpatterns = [
     path('', lists_views.home_page, name='home'),
     path('lists/', include(lists_urls)),
     path('accounts/', include(accounts_urls)),
+    path('polls/', include(polls_urls)),
     path('dazhuanpan/', include(da_zhuan_pan_urls)),
 ]
