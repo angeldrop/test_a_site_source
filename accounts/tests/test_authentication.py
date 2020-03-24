@@ -4,6 +4,7 @@ from accounts.authentication import PasswordlessAuthenticationBackend
 from unittest.mock import patch,call
 from accounts.models import Token,User
 
+User=get_user_model()
 
 class AuthenticateTest(TestCase):
     def test_returns_None_if_no_such_token(self):
@@ -19,7 +20,7 @@ class AuthenticateTest(TestCase):
         new_user=User.objects.get(email=email)
         self.assertEqual(user,new_user)
         
-    def test_returns_existing_user_with_correct_emai_if_token_exists(self):
+    def test_returns_existing_user_with_correct_email_if_token_exists(self):
         email='edith@example.com'
         existing_user=User.objects.create(email=email)
         token=Token.objects.create(email=email)

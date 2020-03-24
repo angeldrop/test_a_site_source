@@ -21,7 +21,7 @@ from polls import urls as polls_urls
 from da_zhuan_pan import urls as da_zhuan_pan_urls
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', lists_views.home_page, name='home'),
     path('lists/', include(lists_urls)),
     path('accounts/', include(accounts_urls)),
