@@ -21,7 +21,7 @@ def send_login_email(request):
     messages.add_message(
         request,
         messages.SUCCESS,
-        "Check your email,we've sent you a link you can use to log in."
+        "检查你的邮箱，我们已经发送地址到您的邮箱了！！"
     )
     return redirect('/')
     
