@@ -1,5 +1,4 @@
 from django.urls import path,re_path
-from django.contrib.auth import logout
 from accounts import views
 
 urlpatterns = [
