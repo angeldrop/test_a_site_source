@@ -153,3 +153,10 @@ LOGGING = {
     },
     'root': {'level': 'INFO'},
 }
+
+#email settings
+EMAIL_HOST='smtp.163.com'
+EMAIL_HOST_USER='fffdan110@163.com'
+EMAIL_HOST_PASSWORD='Dan;123066'
+EMAIL_PORT=995
+EMAIL_USE_SSL=True
