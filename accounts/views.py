@@ -21,12 +21,16 @@ def send_login_email(request):
     messages.add_message(
         request,
         messages.SUCCESS,
-        "检查你的邮箱，我们已经发送地址到您的邮箱了！！"
+        f"检查你的邮箱，我们已经发送地址到您的邮箱({email})了！！"
     )
     return redirect('/')
     
 def login(request):
-    user=auth.authenticate(uid=request.GET.get('token'))
+    user = auth.authenticate(request.GET.get('token'))
     if user:
         auth.login(request, user)
+    return redirect('/')
+
+def logout_view(request):
+    auth.logout(request)
     return redirect('/')
