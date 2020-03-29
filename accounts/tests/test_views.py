@@ -60,7 +60,7 @@ class SendLoginEmailViewTest(TestCase):
         message=list(response.context['messages'])[0]
         self.assertEqual(
             message.message,
-            "Check your email,we've sent you a link you can use to log in."
+            f"检查你的邮箱，我们已经发送地址到您的邮箱(fffdan044@163.com)了！！"
         )
         
         
