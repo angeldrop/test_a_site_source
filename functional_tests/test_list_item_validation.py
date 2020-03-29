@@ -1,6 +1,7 @@
 from unittest import skip
 from selenium.webdriver.common.keys import Keys
 from .base import FunctionalTest
+import time
 
 
 class ItemValidationTest(FunctionalTest):
@@ -75,8 +76,9 @@ class ItemValidationTest(FunctionalTest):
         ))
         
         #为了消除错误，他开始在输入框中输入内容
+        time.sleep(1)
         self.get_item_input_box().send_keys('a')
-        
+        time.sleep(1)
         #看到错误消息消失了，他很高兴
         self.wait_for(lambda:self.assertFalse(
             self.get_error_element().is_displayed()

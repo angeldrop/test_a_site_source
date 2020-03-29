@@ -12,7 +12,7 @@ SUBJECT='你的登录超级表单项目的链接'
 
 class LoginTest(FunctionalTest):
 
-    def test_layout_and_styling(self):
+    def test_can_get_email_link_to_log_in(self):
         # 迪达拉登录首页
         # 他注意到导航栏有”登录“区域
         # 看到要求输入电子邮箱，他便输入了
@@ -23,7 +23,7 @@ class LoginTest(FunctionalTest):
 
         # 出现消息，说邮件已发出
         self.wait_for(lambda:self.assertIn(
-            'Check your email',
+            '检查你的邮箱，我们已经发送',
             self.browser.find_element_by_tag_name('body').text
         ))
         
@@ -43,9 +43,11 @@ class LoginTest(FunctionalTest):
         #他点击了链接
         self.browser.get(url)
         #他登录了！！
-        self.wait_for(
-            lambda:self.browser.find_element_by_link_text('退出登录')
-        )
-        navbar=self.browser.find_element_by_css_selector('.navbar')
-        self.assertIn(TEST_EMAIL,navbar.text)
+        self.wait_to_be_logged_in(email=TEST_EMAIL)
+        
+        #他要退出
+        self.browser.find_element_by_link_text('退出登录').click()
+        
+        #他退出了
+        self.wait_to_be_logged_out(email=TEST_EMAIL)
         
